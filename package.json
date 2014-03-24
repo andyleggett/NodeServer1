@@ -1,5 +1,5 @@
 {
-  "name": "TCP Server Relay",
+  "name": "TCP_Server_Relay",
   "version": "0.0.1",
   "description": "Proof of concept for TCP Relay using express and socket.io",
   "main": "server.js",
