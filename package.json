@@ -1,0 +1,22 @@
+{
+  "name": "TCP Server Relay",
+  "version": "0.0.1",
+  "description": "Proof of concept for TCP Relay using express and socket.io",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": "",
+  "author": "",
+  "license": "BSD",
+  "dependencies": {
+    "logfmt": "~1.0.0",
+    "express": "~3.5.0",
+    "socket.io": "~0.9.x"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  }
+}
