@@ -13,7 +13,7 @@
 	function connectSocket(){
 		addMessage("connecting...");
 
-		ws = io.connect("ws://localhost:5000");
+		ws = io.connect("ws://mysterious-cliffs-7372.herokuapp.com:5000");
 
 		var counter = 1;
 		var interval = setInterval(function(){
