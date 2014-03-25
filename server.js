@@ -1,14 +1,59 @@
-var express = require("express");
-var logfmt = require("logfmt");
-var app = express();
+var express = require("express"),
+app = express(),
+server = require("http").createServer(app),
+io = require("socket.io").listen(server),
+net = require("net"),
+renderSocket = net.Socket(),
+port = Number(process.env.PORT || 5000);
 
-app.use(logfmt.requestLogger());
+//set up socket to renderer and connect
+renderSocket.on("error", function(error){
 
-app.get('/', function(req, res) {
-  res.send('Hello World!');
+	console.log(error);
 });
 
-var port = Number(process.env.PORT || 5000);
-app.listen(port, function() {
-  console.log("Listening on " + port);
+renderSocket.on("data", function(data){
+	console.log(data);
+	io.sockets.emit("message", {message: data.toString()});
+})
+
+renderSocket.connect(6100, "whispering-hamlet-1488.herokuapp.com",  function(){
+	io.sockets.emit("message", {message: "renderer socket connected"});
 });
+
+// set up middleware and engine
+app.use(express.logger());
+app.use(express.static(__dirname + "/public"));
+app.set("views", __dirname + "/views");
+app.engine("html", require("ejs").renderFile);
+app.set("view engine", "html");
+
+//routes
+app.get("/", function(req, res) {
+  res.render("index.html");
+});
+
+//websocket events
+io.sockets.on("connection", function(socket){
+	socket.emit("connected", {data: "hello there"});
+	socket.on("message", function(data){
+		console.log(data);
+
+		renderSocket.write(data.toString());
+
+		if (data == "instruction-20"){
+			console.log("stopping");
+			socket.emit("stop");
+		}
+	});
+});
+
+//start http server listening
+server.listen(port, function() {
+  console.log("App listening on " + port);
+});
+
+
+
+
+

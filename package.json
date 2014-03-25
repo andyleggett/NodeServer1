@@ -13,7 +13,8 @@
   "dependencies": {
     "logfmt": "~1.0.0",
     "express": "~3.5.0",
-    "socket.io": "~0.9.x"
+    "socket.io": "~0.9.x",
+    "ejs": "~0.8.6"
   },
   "engines": {
     "node": "0.10.x",
