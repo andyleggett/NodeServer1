@@ -13,27 +13,32 @@
 	function connectSocket(){
 		addMessage("connecting...");
 
-		ws = io.connect("ws://mysterious-cliffs-7372.herokuapp.com:5000");
+		ws = io.connect();
 
-		var counter = 1;
-		var interval = setInterval(function(){
-			ws.emit("message", "instruction-" + counter++);
-		}, 250
-		);
-
-		ws.on('connected', function(data){
+		ws.on('connect', function(){
 			addMessage("connected!");
+
+			ws.on('error', function(error){
+				addMessage(error.toString());
+			});
+
+			ws.on('stop', function(){
+				clearInterval(interval);
+				addMessage("complete!");
+			});
+
+			ws.on('message', function(data){
+				console.log(data.message);
+				addMessage(data.message);
+			});
+
+			var counter = 1;
+
+			var interval = setInterval(function(){
+				ws.emit("message", "instruction set -" + counter++);
+			}, 250);
 		});
 
-		ws.on('stop', function(){
-			clearInterval(interval);
-			addMessage("complete!");
-		});
-
-		ws.on('message', function(data){
-			console.log(data.message);
-			addMessage(data.message);
-		});
 	}
 
 	function addMessage(message){

@@ -17,7 +17,7 @@ renderSocket.on("data", function(data){
 	io.sockets.emit("message", {message: data.toString()});
 })
 
-renderSocket.connect(6100, "whispering-hamlet-1488.herokuapp.com",  function(){
+renderSocket.connect(6100, "whispering-hamlet-1488.herokuapp.com", function(){
 	io.sockets.emit("message", {message: "renderer socket connected"});
 });
 
