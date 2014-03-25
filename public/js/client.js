@@ -35,7 +35,7 @@
 			var counter = 1;
 
 			var interval = setInterval(function(){
-				ws.emit("message", "instruction set -" + counter++);
+				ws.emit("message", "instruction set - " + counter++);
 			}, 250);
 		});
 
